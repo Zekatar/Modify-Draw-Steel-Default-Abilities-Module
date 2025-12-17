@@ -1,0 +1,29 @@
+{
+  "id": "modify-draw-steel-default-abilities",
+  "title": "Modify Draw Steel Default Abilities",
+  "description": "Modify automatic import of basic abilities to new heroes.",
+  "authors": [
+    {
+    "name": "Stephan L.",
+    "discord": "Zekatar"
+    }
+  ],
+  "version": "2.0.0",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+   },
+  "relationships": {
+    "systems": [
+      {
+        "id": "draw-steel",
+        "type": "system",
+        "compatibility": {}
+      }
+    ]
+  },
+  "scripts": [
+  "scripts/settings.js",
+  "scripts/removeAbilities.js"
+  ]
+}
