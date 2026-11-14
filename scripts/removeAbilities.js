@@ -16,6 +16,6 @@ var basicAbilities = basicCompendium.index.filter(a => a.folder === folderID);
 //Check settings and readd ability to set in loop
 for (basicAbility of basicAbilities){
   let settingID = "add" + basicAbility.name.replaceAll(" ", "");
-  if (game.settings.get("modify-draw-steel-default-abilities", settingID) === false) {set.add(basicAbility.uuid);};
+  if (game.settings.get("modify-draw-steel-default-abilities", settingID) === true) {set.add(basicAbility.uuid);};
 };
 });
