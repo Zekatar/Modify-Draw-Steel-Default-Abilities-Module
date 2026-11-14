@@ -1,24 +1,21 @@
 Hooks.once("ready", () => {
-//Find and save set of default abilities
+//Clear all default abilities
 const set = CONFIG.DRAW_STEEL.hero.defaultItems;
+set.clear();
 
 //Find compendium with basic abilities
-var basicCompendium = game.packs.get("draw-steel.abilities");
+var compendiumPath = (game.settings.get("modify-draw-steel-default-abilities", "compendiumPath") === "") ? "draw-steel.abilities" : game.settings.get("modify-draw-steel-default-abilities", "compendiumPath");
+var basicCompendium = game.packs.get(compendiumPath);
 
-/* Find the ability folder by name, commented out because of possible translation issues
-//Find folder of basic abilities
-var basicFolder = basicCompendium.folders.find(a => a.name === "Basic Abilities");
-//Find basic abilities in folder and gather them in array
-var basicAbilities = basicCompendium.index.filter(a => a.folder === basicFolder._id);
-*/
 
 //Find basic abilities by folder id and gather them in array
-var basicAbilities = basicCompendium.index.filter(a => a.folder === "YKzQ5cCX8knW8fAc");
+var folderID = (game.settings.get("modify-draw-steel-default-abilities", "customFolder") === "") ? "YKzQ5cCX8knW8fAc" : game.settings.get("modify-draw-steel-default-abilities", "customFolder");
+var basicAbilities = basicCompendium.index.filter(a => a.folder === folderID);
 
 
-//Check settings and remove ability from set in loop
+//Check settings and readd ability to set in loop
 for (basicAbility of basicAbilities){
   let settingID = "add" + basicAbility.name.replaceAll(" ", "");
-  if (game.settings.get("modify-draw-steel-default-abilities", settingID) === false) {set.delete(basicAbility.uuid);};
+  if (game.settings.get("modify-draw-steel-default-abilities", settingID) === false) {set.add(basicAbility.uuid);};
 };
 });

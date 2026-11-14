@@ -1,16 +1,37 @@
 Hooks.once("ready", () => {
-//Find compendium with basic abilities
-var basicCompendium = game.packs.get("draw-steel.abilities");
 
-/* Find the ability folder by name, commented out because of possible translation issues
-//Find folder of basic abilities
-var basicFolder = basicCompendium.folders.find(a => a.name === "Basic Abilities");
-//Find basic abilities in folder and gather them in array
-var basicAbilities = basicCompendium.index.filter(a => a.folder === basicFolder._id);
-*/
+game.settings.register("modify-draw-steel-default-abilities", "compendiumPath", {
+  name: "Path for Compendium",
+  hint: "Open console (F12), enter game.packs and search for your compendium (for example draw-steel.abilities).",
+  scope: "world",
+  config: true,
+  requiresReload: true,
+  type: String,
+  default: "draw-steel.abilities",
+  onChange: value => {}
+ });
+
+game.settings.register("modify-draw-steel-default-abilities", "customFolder", {
+  name: "ID of Compendium Folder",
+  hint: "When switching to a new folder, it might be needed to check all entries once for changes to take full effect. WARNING: When deleting checked abilities from the folder, restart the game.",
+  scope: "world",
+  config: true,
+  requiresReload: true,
+  type: String,
+  default: "YKzQ5cCX8knW8fAc",
+  onChange: value => {}
+ });
+
+
+//Find compendium with basic abilities
+var compendiumPath = (game.settings.get("modify-draw-steel-default-abilities", "compendiumPath") === "") ? "draw-steel.abilities" : game.settings.get("modify-draw-steel-default-abilities", "compendiumPath");
+var basicCompendium = game.packs.get(compendiumPath);
+
 
 //Find basic abilities by folder id and gather them in array
-var basicAbilities = basicCompendium.index.filter(a => a.folder === "YKzQ5cCX8knW8fAc");
+var folderID = (game.settings.get("modify-draw-steel-default-abilities", "customFolder") === "") ? "YKzQ5cCX8knW8fAc" : game.settings.get("modify-draw-steel-default-abilities", "customFolder");
+var basicAbilities = basicCompendium.index.filter(a => a.folder === folderID);
+
 
 //Sort basic abilities by name
 basicAbilities.sort((a, b) => a.name.localeCompare(b.name));
